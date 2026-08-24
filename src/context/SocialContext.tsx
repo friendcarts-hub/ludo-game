@@ -204,41 +204,10 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           isCurrentUser: user?.uid === u.uid,
         }));
 
-        // If user is logged in and not in the list yet, prepend current user
-        if (user && !processed.some((p) => p.uid === user.uid)) {
-          processed.unshift({
-            uid: user.uid,
-            displayName: user.displayName || 'You',
-            photoURL: user.photoURL || 'king',
-            coins: user.coins || 0,
-            level: user.level || 1,
-            totalWins: user.totalWins || 0,
-            winRate:
-              user.totalGames > 0
-                ? `${Math.round((user.totalWins / user.totalGames) * 100)}%`
-                : '0%',
-            rating: 1400 + (user.totalWins || 0) * 25,
-            status: 'in_lobby',
-            statusText: 'Online in Lobby (You)',
-            gameMode: 'Lobby',
-            lastActive: Date.now(),
-            isRealUser: true,
-            isCurrentUser: true,
-          });
-        }
+        // Deduplicate array by uid to prevent React duplicate key warnings
+        const uniqueProcessed: OnlinePlayer[] = [];
+        const seenUids = new Set<string>();
 
-        // Combine with active community members to provide active match pool
-        const combined: OnlinePlayer[] = [...processed];
-        COMMUNITY_ONLINE_FALLBACK.forEach((seed) => {
-          if (!combined.some((c) => c.uid === seed.uid)) {
-            combined.push(seed);
-          }
-        });
-
-        setRealOnlineUsers(combined);
-        setOnlinePlayersCount(1200 + combined.length * 15 + Math.floor(Math.random() * 20));
-      } else {
-        // Default seed with user included
         if (user) {
           const userEntry: OnlinePlayer = {
             uid: user.uid,
@@ -259,10 +228,63 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             isRealUser: true,
             isCurrentUser: true,
           };
-          setRealOnlineUsers([userEntry, ...COMMUNITY_ONLINE_FALLBACK]);
-        } else {
-          setRealOnlineUsers(COMMUNITY_ONLINE_FALLBACK);
+          uniqueProcessed.push(userEntry);
+          seenUids.add(user.uid);
         }
+
+        processed.forEach((p) => {
+          if (!seenUids.has(p.uid)) {
+            seenUids.add(p.uid);
+            uniqueProcessed.push(p);
+          }
+        });
+
+        // Combine with active community members to provide active match pool
+        COMMUNITY_ONLINE_FALLBACK.forEach((seed) => {
+          if (!seenUids.has(seed.uid)) {
+            seenUids.add(seed.uid);
+            uniqueProcessed.push(seed);
+          }
+        });
+
+        setRealOnlineUsers(uniqueProcessed);
+        setOnlinePlayersCount(1200 + uniqueProcessed.length * 15 + Math.floor(Math.random() * 20));
+      } else {
+        // Default seed with user included (strictly deduplicated)
+        const initialList: OnlinePlayer[] = [];
+        const seen = new Set<string>();
+
+        if (user) {
+          initialList.push({
+            uid: user.uid,
+            displayName: user.displayName || 'You',
+            photoURL: user.photoURL || 'king',
+            coins: user.coins || 0,
+            level: user.level || 1,
+            totalWins: user.totalWins || 0,
+            winRate:
+              user.totalGames > 0
+                ? `${Math.round((user.totalWins / user.totalGames) * 100)}%`
+                : '0%',
+            rating: 1400 + (user.totalWins || 0) * 25,
+            status: 'in_lobby',
+            statusText: 'Online in Lobby (You)',
+            gameMode: 'Lobby',
+            lastActive: Date.now(),
+            isRealUser: true,
+            isCurrentUser: true,
+          });
+          seen.add(user.uid);
+        }
+
+        COMMUNITY_ONLINE_FALLBACK.forEach((seed) => {
+          if (!seen.has(seed.uid)) {
+            seen.add(seed.uid);
+            initialList.push(seed);
+          }
+        });
+
+        setRealOnlineUsers(initialList);
       }
     });
 
