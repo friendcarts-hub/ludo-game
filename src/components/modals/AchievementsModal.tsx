@@ -56,14 +56,14 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({ isOpen, on
 
             {/* List */}
             <div className="flex-1 overflow-y-auto py-3 space-y-2.5 pr-1">
-              {achievements.map((ach) => {
+              {achievements.map((ach, idx) => {
                 const isUnlocked = ach.isUnlocked;
                 const isClaimed = ach.isClaimed;
                 const progressPct = Math.min(100, Math.floor((ach.progress / ach.target) * 100));
 
                 return (
                   <motion.div
-                    key={ach.id}
+                    key={`achievement-${ach.id || idx}-${idx}`}
                     whileHover={{ scale: 1.01 }}
                     className={`p-3.5 rounded-2xl border transition-all ${
                       isClaimed

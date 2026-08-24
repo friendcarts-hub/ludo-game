@@ -486,7 +486,7 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({ gameState, onRematch
 
                     return (
                       <motion.div
-                        key={player.id}
+                        key={`victory-player-${player.id || idx}-${idx}`}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: idx * 0.08 }}
@@ -653,11 +653,11 @@ export const VictoryModal: React.FC<VictoryModalProps> = ({ gameState, onRematch
                       Total Pawns Captured in Match
                     </span>
                     <div className="space-y-1.5">
-                      {gameState.players.map((p) => {
+                      {gameState.players.map((p, pIdx) => {
                         const totalMatchKills = gameState.players.reduce((sum, pl) => sum + pl.kills, 0) || 1;
                         const killPct = Math.round((p.kills / totalMatchKills) * 100);
                         return (
-                          <div key={p.id} className="text-xs">
+                          <div key={`victory-stats-${p.id || pIdx}-${pIdx}`} className="text-xs">
                             <div className="flex justify-between text-slate-300 font-bold mb-0.5">
                               <span>{p.name}</span>
                               <span className="font-mono text-rose-400">{p.kills} kills</span>

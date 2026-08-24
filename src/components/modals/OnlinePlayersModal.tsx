@@ -177,7 +177,7 @@ export const OnlinePlayersModal: React.FC<OnlinePlayersModalProps> = ({
                   <p className="text-xs text-slate-400">No online users found matching criteria.</p>
                 </div>
               ) : (
-                filteredPlayers.map((player) => {
+                filteredPlayers.map((player, idx) => {
                   const avatarObj =
                     AVATAR_LIST.find((a) => a.id === player.photoURL) || AVATAR_LIST[0];
                   const isCurrent = player.uid === user?.uid || player.isCurrentUser;
@@ -185,7 +185,7 @@ export const OnlinePlayersModal: React.FC<OnlinePlayersModalProps> = ({
 
                   return (
                     <motion.div
-                      key={player.uid}
+                      key={`online-player-${player.uid || idx}-${idx}`}
                       whileHover={{ scale: 1.01 }}
                       className={`p-3 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                         isCurrent

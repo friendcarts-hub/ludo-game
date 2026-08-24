@@ -697,9 +697,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                     />
 
                     <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
-                      {filteredUsers.map((u) => (
+                      {filteredUsers.map((u, idx) => (
                         <div
-                          key={u.uid}
+                          key={`admin-user-${u.uid || idx}-${idx}`}
                           className="p-3 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-center justify-between text-xs"
                         >
                           <div>
@@ -782,9 +782,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                           No withdrawal requests submitted yet.
                         </div>
                       ) : (
-                        withdrawals.map((w) => (
+                        withdrawals.map((w, idx) => (
                           <div
-                            key={w.id}
+                            key={`admin-withdraw-${w.id || idx}-${idx}`}
                             className="p-3.5 rounded-2xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-xs"
                           >
                             <div>
@@ -916,9 +916,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
 
                     {/* Tournament List */}
                     <div className="space-y-2">
-                      {tournaments.map((t) => (
+                      {tournaments.map((t, idx) => (
                         <div
-                          key={t.id}
+                          key={`admin-tourn-${t.id || idx}-${idx}`}
                           className="p-3 rounded-2xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-xs"
                         >
                           <div>

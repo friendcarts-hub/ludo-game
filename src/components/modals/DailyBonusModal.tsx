@@ -62,7 +62,7 @@ export const DailyBonusModal: React.FC<DailyBonusModalProps> = ({ isOpen, onClos
 
             {/* 7-Day Calendar Grid */}
             <div className="py-4 grid grid-cols-4 gap-2.5">
-              {DAILY_BONUS_SCHEDULE.map((item) => {
+              {DAILY_BONUS_SCHEDULE.map((item, idx) => {
                 const isCompleted = item.day < dailyBonusStreak;
                 const isCurrentToday = item.day === dailyBonusStreak;
                 const canClaim = isCurrentToday && isDailyBonusAvailable;
@@ -70,7 +70,7 @@ export const DailyBonusModal: React.FC<DailyBonusModalProps> = ({ isOpen, onClos
 
                 return (
                   <motion.div
-                    key={item.day}
+                    key={`daily-bonus-${item.day}-${idx}`}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className={`p-3 rounded-2xl border flex flex-col items-center justify-between text-center relative transition-all ${

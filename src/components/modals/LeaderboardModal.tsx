@@ -98,13 +98,13 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({ isOpen, onCl
 
             {/* Top 3 Podium Cards */}
             <div className="grid grid-cols-3 gap-2 mb-3 pt-2">
-              {safeList.slice(0, 3).map((entry) => {
+              {safeList.slice(0, 3).map((entry, idx) => {
                 const avatarObj = AVATAR_LIST.find((a) => a.id === entry.avatar) || AVATAR_LIST[0];
                 const isRank1 = entry.rank === 1;
 
                 return (
                   <motion.div
-                    key={entry.uid}
+                    key={`leader-top-${entry.uid || idx}-${idx}`}
                     whileHover={{ scale: 1.03 }}
                     className={`p-2.5 rounded-2xl border text-center relative flex flex-col items-center justify-between ${
                       isRank1
@@ -155,13 +155,13 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({ isOpen, onCl
                   transition={{ duration: 0.15 }}
                   className="space-y-1.5"
                 >
-                  {safeList.slice(3).map((entry) => {
+                  {safeList.slice(3).map((entry, idx) => {
                     const avatarObj = AVATAR_LIST.find((a) => a.id === entry.avatar) || AVATAR_LIST[0];
                     const isUser = entry.uid === user?.uid || entry.isCurrentUser;
 
                     return (
                       <div
-                        key={entry.uid}
+                        key={`leader-rest-${entry.uid || idx}-${idx + 3}`}
                         className={`p-2.5 rounded-xl border flex items-center justify-between text-xs transition-all ${
                           isUser
                             ? 'bg-yellow-500/20 border-yellow-400 text-white'

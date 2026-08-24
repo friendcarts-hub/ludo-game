@@ -340,9 +340,9 @@ export const WithdrawalModal: React.FC<WithdrawalModalProps> = ({ isOpen, onClos
                       No withdrawal requests yet.
                     </div>
                   ) : (
-                    withdrawals.map((w) => (
+                    withdrawals.map((w, idx) => (
                       <div
-                        key={w.id}
+                        key={`withdrawal-item-${w.id || idx}-${idx}`}
                         className="p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-center justify-between text-xs"
                       >
                         <div>

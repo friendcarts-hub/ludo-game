@@ -313,9 +313,9 @@ export const LudoBoard: React.FC<LudoBoardProps> = ({
           </div>
 
           {/* 6. RENDER ALL ACTIVE TOKENS ON BOARD */}
-          {tokensOnBoard.map((token) => (
+          {tokensOnBoard.map((token, tokenIdx) => (
             <Pawn
-              key={`${token.color}-${token.id}`}
+              key={`token-${token.color}-${token.id}-${tokenIdx}`}
               tokenId={token.id}
               color={token.color}
               step={token.step}

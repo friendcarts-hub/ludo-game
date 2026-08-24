@@ -58,9 +58,9 @@ export const InGameChatModal: React.FC<InGameChatModalProps> = ({
             <Smile className="w-3.5 h-3.5 text-yellow-400" /> TAP TO SEND BOARD REACTION
           </p>
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {EMOJI_REACTIONS.map((emoji) => (
+            {EMOJI_REACTIONS.map((emoji, idx) => (
               <button
-                key={emoji}
+                key={`modal-emoji-${emoji}-${idx}`}
                 onClick={() => {
                   onSendEmoji(emoji);
                 }}
@@ -79,9 +79,9 @@ export const InGameChatModal: React.FC<InGameChatModalProps> = ({
               No messages yet. Send a quick phrase or emoji!
             </div>
           ) : (
-            messages.map((msg) => (
+            messages.map((msg, idx) => (
               <div
-                key={msg.id}
+                key={`modal-msg-${msg.id || idx}-${idx}`}
                 className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/40 text-xs flex items-start gap-2"
               >
                 <div className="w-6 h-6 rounded-md bg-slate-700 flex items-center justify-center font-bold text-[10px] text-amber-400 shrink-0">
@@ -108,9 +108,9 @@ export const InGameChatModal: React.FC<InGameChatModalProps> = ({
         <div className="pt-2 border-t border-slate-800">
           <p className="text-[11px] font-bold text-slate-400 mb-2">QUICK PHRASES</p>
           <div className="grid grid-cols-2 gap-1.5 max-h-[110px] overflow-y-auto pr-1">
-            {QUICK_CHAT_MESSAGES.map((phrase) => (
+            {QUICK_CHAT_MESSAGES.map((phrase, idx) => (
               <button
-                key={phrase}
+                key={`modal-phrase-${phrase}-${idx}`}
                 onClick={() => {
                   onSendMessage(phrase, true);
                 }}

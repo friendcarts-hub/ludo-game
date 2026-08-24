@@ -147,9 +147,9 @@ export const InGameChatSidePanel: React.FC<InGameChatSidePanelProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {EMOJI_REACTIONS.map((emoji) => (
+            {EMOJI_REACTIONS.map((emoji, idx) => (
               <motion.button
-                key={emoji}
+                key={`emoji-btn-${emoji}-${idx}`}
                 whileHover={{ scale: 1.2, y: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => handleEmojiClick(emoji)}
@@ -174,14 +174,14 @@ export const InGameChatSidePanel: React.FC<InGameChatSidePanelProps> = ({
               </p>
             </div>
           ) : (
-            messages.map((msg) => {
+            messages.map((msg, idx) => {
               const isMe = msg.senderId === currentUserId || msg.senderName === 'You';
               const avatarObj = AVATAR_LIST.find((a) => a.id === msg.senderAvatar);
               const emojiDisplay = avatarObj?.emoji || '👑';
 
               return (
                 <motion.div
-                  key={msg.id}
+                  key={`chat-msg-${msg.id || idx}-${idx}`}
                   initial={{ opacity: 0, y: 8, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
@@ -251,9 +251,9 @@ export const InGameChatSidePanel: React.FC<InGameChatSidePanelProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-1.5 max-h-24 overflow-y-auto pr-1">
-            {activeCategoryObj.phrases.map((phrase) => (
+            {activeCategoryObj.phrases.map((phrase, idx) => (
               <motion.button
-                key={phrase}
+                key={`phrase-${phrase}-${idx}`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => handleQuickPhraseClick(phrase)}

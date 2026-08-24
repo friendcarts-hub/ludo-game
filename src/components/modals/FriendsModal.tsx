@@ -128,7 +128,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
             {activeTab === 'online' ? (
               /* TAB 1: Live Real Online Users */
               <div className="flex-1 overflow-y-auto py-2 space-y-2 pr-1 custom-scrollbar">
-                {realOnlineUsers.map((player) => {
+                {realOnlineUsers.map((player, idx) => {
                   const avatarObj =
                     AVATAR_LIST.find((a) => a.id === player.photoURL) || AVATAR_LIST[0];
                   const isCurrent = player.uid === user?.uid || player.isCurrentUser;
@@ -136,7 +136,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
 
                   return (
                     <motion.div
-                      key={player.uid}
+                      key={`online-user-${player.uid || idx}-${idx}`}
                       whileHover={{ scale: 1.01 }}
                       className={`p-3 rounded-2xl border transition-all flex items-center justify-between gap-2.5 ${
                         isCurrent
@@ -246,12 +246,12 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({
 
                 {/* Friends List */}
                 <div className="flex-1 overflow-y-auto py-2 space-y-2 pr-1 custom-scrollbar">
-                  {friends.map((friend) => {
+                  {friends.map((friend, idx) => {
                     const avatarObj = AVATAR_LIST.find((a) => a.id === friend.avatar) || AVATAR_LIST[0];
 
                     return (
                       <motion.div
-                        key={friend.id}
+                        key={`friend-item-${friend.id || idx}-${idx}`}
                         whileHover={{ scale: 1.01 }}
                         className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-between"
                       >

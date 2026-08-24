@@ -227,9 +227,9 @@ export const WalletModal: React.FC<WalletModalProps> = ({
                           No transactions in this category.
                         </div>
                       ) : (
-                        filteredTxns.map((tx) => (
+                        filteredTxns.map((tx, idx) => (
                           <div
-                            key={tx.id}
+                            key={`wallet-tx-${tx.id || idx}-${idx}`}
                             className="p-2.5 rounded-xl bg-slate-800/40 border border-slate-700/40 flex items-center justify-between text-xs"
                           >
                             <div className="flex items-center gap-2.5">

@@ -641,9 +641,9 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                     <span className="text-[11px] font-black text-slate-300 uppercase tracking-wider block">
                       Recent Payout Requests
                     </span>
-                    {(withdrawals || []).slice(0, 3).map((w) => (
+                    {(withdrawals || []).slice(0, 3).map((w, idx) => (
                       <div
-                        key={w.id}
+                        key={`profile-w-${w.id || idx}-${idx}`}
                         className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs"
                       >
                         <div className="flex items-center gap-2">
@@ -780,9 +780,9 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
                     Select Player Avatar
                   </label>
                   <div className="grid grid-cols-8 gap-1.5">
-                    {AVATAR_LIST.map((av) => (
+                    {AVATAR_LIST.map((av, idx) => (
                       <button
-                        key={av.id}
+                        key={`profile-av-${av.id || idx}-${idx}`}
                         type="button"
                         onClick={() => {
                           soundManager.playClick();
