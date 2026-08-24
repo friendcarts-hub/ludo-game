@@ -1,0 +1,6 @@
+{
+  "name": "LudoVerse",
+  "description": "A professional real-time multiplayer Ludo web application with AI bots, interactive in-game side-panel chat with quick-phrases and emojis, wallet rewards, withdrawals, Web Audio sound effects, and victory celebrations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

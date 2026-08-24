@@ -1,0 +1,297 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with player statistics, wallet coins, and progression data.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique identifier for the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Public display username",
+          "maxLength": 60
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar identifier or URL",
+          "maxLength": 128
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"],
+          "description": "Role of the user"
+        },
+        "coins": {
+          "type": "number",
+          "description": "Gold coins in user balance"
+        },
+        "xp": {
+          "type": "number",
+          "description": "Experience points"
+        },
+        "level": {
+          "type": "number",
+          "description": "Player level"
+        },
+        "totalGames": {
+          "type": "number",
+          "description": "Total matches played"
+        },
+        "totalWins": {
+          "type": "number",
+          "description": "Total matches won"
+        },
+        "totalKills": {
+          "type": "number",
+          "description": "Total pawns captured"
+        },
+        "totalSixes": {
+          "type": "number",
+          "description": "Total number of sixes rolled"
+        },
+        "winStreak": {
+          "type": "number",
+          "description": "Current active win streak"
+        },
+        "highestWinStreak": {
+          "type": "number",
+          "description": "All time highest win streak"
+        },
+        "favoriteColor": {
+          "type": "string",
+          "enum": ["red", "green", "yellow", "blue"],
+          "description": "Favorite board color token"
+        },
+        "referralCode": {
+          "type": "string",
+          "description": "User's referral code"
+        },
+        "referralEarnings": {
+          "type": "number",
+          "description": "Coins earned via referral"
+        },
+        "totalReferrals": {
+          "type": "number",
+          "description": "Number of invited friends"
+        },
+        "kycStatus": {
+          "type": "string",
+          "enum": ["unverified", "pending", "verified", "rejected"],
+          "description": "KYC document verification status"
+        },
+        "isBanned": {
+          "type": "boolean",
+          "description": "Whether the user account is suspended"
+        },
+        "dailyStreak": {
+          "type": "number",
+          "description": "Daily login streak count"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Account creation timestamp in milliseconds"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Last profile update timestamp in milliseconds"
+        }
+      },
+      "required": ["uid", "displayName", "role", "coins", "createdAt", "updatedAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Ledger entry for deposits, withdrawals, match fees, and winnings.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique transaction ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID of the transaction owner"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["deposit", "withdrawal", "game_win", "game_entry", "bonus", "referral", "refund"],
+          "description": "Transaction category"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Coin amount transferred"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "completed", "failed", "cancelled"],
+          "description": "Processing status"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the transaction"
+        },
+        "date": {
+          "type": "number",
+          "description": "Transaction timestamp in milliseconds"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Payment channel used"
+        },
+        "referenceId": {
+          "type": "string",
+          "description": "External reference code"
+        }
+      },
+      "required": ["id", "userId", "type", "amount", "status", "date"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public ranking card on global and regional boards.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User ID"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Player name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar ID"
+        },
+        "totalWins": {
+          "type": "number",
+          "description": "Total wins"
+        },
+        "totalGames": {
+          "type": "number",
+          "description": "Total games"
+        },
+        "rating": {
+          "type": "number",
+          "description": "MMR rating"
+        },
+        "coinsWon": {
+          "type": "number",
+          "description": "Total coins accumulated"
+        },
+        "winRate": {
+          "type": "string",
+          "description": "Win percentage string"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "displayName", "totalWins", "rating", "updatedAt"]
+    },
+    "AdminRole": {
+      "title": "AdminRole",
+      "description": "Designates verified administrative authority.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User ID with admin privilege"
+        },
+        "grantedAt": {
+          "type": "number",
+          "description": "Timestamp when admin role was granted"
+        },
+        "grantedBy": {
+          "type": "string",
+          "description": "User ID who assigned the admin role"
+        }
+      },
+      "required": ["uid", "grantedAt"]
+    },
+    "OnlinePresence": {
+      "title": "OnlinePresence",
+      "description": "Real-time user presence heartbeat and activity state.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique identifier of the player"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Player screen name",
+          "maxLength": 60
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar identifier or URL",
+          "maxLength": 128
+        },
+        "coins": {
+          "type": "number",
+          "description": "Player gold coins"
+        },
+        "level": {
+          "type": "number",
+          "description": "Player level"
+        },
+        "totalWins": {
+          "type": "number",
+          "description": "Player total victories"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["online", "in_lobby", "playing", "matchmaking"],
+          "description": "Current player status"
+        },
+        "statusText": {
+          "type": "string",
+          "description": "Descriptive status text",
+          "maxLength": 100
+        },
+        "gameMode": {
+          "type": "string",
+          "description": "Current active game mode"
+        },
+        "lastActive": {
+          "type": "number",
+          "description": "Last active heartbeat timestamp in ms"
+        },
+        "isOnline": {
+          "type": "boolean",
+          "description": "Whether user is currently connected"
+        }
+      },
+      "required": ["uid", "displayName", "lastActive", "isOnline"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Primary user profile and persistent stats"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User transaction ledger"
+    },
+    "/leaderboards/{userId}": {
+      "schema": "LeaderboardEntry",
+      "description": "Global leaderboard documents"
+    },
+    "/admins/{userId}": {
+      "schema": "AdminRole",
+      "description": "Admin identity markers"
+    },
+    "/online_users/{userId}": {
+      "schema": "OnlinePresence",
+      "description": "Real-time active player presence records"
+    }
+  }
+}
